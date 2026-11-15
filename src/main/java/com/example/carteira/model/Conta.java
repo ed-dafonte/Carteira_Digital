@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue; // importa a anotação que gera o id
 import jakarta.persistence.GenerationType; // importa a estratégia de geração do id
 import jakarta.persistence.Id; // importa a anotação que marca o campo como chave primária
 
+//É o dado. Apenas descreve como a Conta é: quais campos ela tem. Não faz nada, só representa.
+
 @Entity // diz ao Spring/JPA que essa classe representa uma tabela no banco de dados
 public class Conta {
 

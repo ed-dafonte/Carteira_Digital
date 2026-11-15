@@ -3,6 +3,9 @@ package com.example.carteira.repository; // define o pacote onde esta interface 
 import com.example.carteira.model.Conta; // importa a entidade Conta
 import org.springframework.data.jpa.repository.JpaRepository; // importa a interface do Spring que já oferece os métodos de banco prontos
 
+
+// É o acesso ao banco. Só sabe buscar, salvar e deletar contas. Não conhece regra de negócio nenhuma.
+
 // JpaRepository já fornece métodos como findById, save, delete, etc.
 // não precisamos escrever nada aqui — o Spring cria a implementação automaticamente
 public interface ContaRepository extends JpaRepository<Conta, Long> {
