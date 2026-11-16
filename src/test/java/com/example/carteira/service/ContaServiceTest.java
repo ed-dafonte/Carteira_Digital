@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension; // importa a extensão do Moc
 import java.util.Optional; // importa o Optional, usado pelo findById para indicar que pode ou não existir um valor
 
 import static org.junit.jupiter.api.Assertions.assertEquals; // importa o método que verifica se dois valores são iguais
+import static org.mockito.Mockito.verify; // importa o método que verifica se algo foi chamado durante o teste
 import static org.mockito.Mockito.when; // importa o método que define o comportamento do mock
 
 @ExtendWith(MockitoExtension.class) // ativa o Mockito para que os @Mock e @InjectMocks funcionem nesta classe
@@ -42,5 +43,26 @@ class ContaServiceTest {
         // --- ASSERT (verificação) ---
 
         assertEquals(500.0, saldo); // verifica se o saldo retornado é 500.0, como esperado
+    }
+
+    @Test // marca este método como um caso de teste
+    void deveDepositarValorValidoEAtualizarOSaldo() {
+
+        // --- ARRANGE (preparação) ---
+
+        Conta conta = new Conta(1L, "João", 500.0); // cria uma conta fictícia com saldo inicial de 500
+
+        when(contaRepository.findById(1L)) // define que quando buscar pelo id 1...
+                .thenReturn(Optional.of(conta)); // ...retorna a conta fictícia
+
+        // --- ACT (execução) ---
+
+        contaService.depositar(1L, 200.0); // chama o método depositar com id 1 e valor 200
+
+        // --- ASSERT (verificação) ---
+
+        assertEquals(700.0, conta.getSaldo()); // verifica se o saldo foi atualizado de 500 para 700
+
+        verify(contaRepository).save(conta); // verifica se o repositório foi chamado para salvar a conta atualizada
     }
 }

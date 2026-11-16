@@ -21,4 +21,9 @@ public class ContaService {
 
         return conta.getSaldo(); // retorna o saldo da conta encontrada
     }
+
+    // método ainda sem implementação — será preenchido no commit GREEN
+    public void depositar(Long id, Double valor) {
+
+    }
 }
