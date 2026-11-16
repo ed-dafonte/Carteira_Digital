@@ -1,9 +1,9 @@
-package com.example.carteira.model; // define o pacote onde esta classe está localizada
+package com.example.carteira.model;
 
-import jakarta.persistence.Entity; // importa a anotação que marca a classe como tabela no banco
-import jakarta.persistence.GeneratedValue; // importa a anotação que gera o id automaticamente
-import jakarta.persistence.GenerationType; // importa a estratégia de geração do id
-import jakarta.persistence.Id; // importa a anotação que marca o campo como chave primária
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 //É o dado. Apenas descreve como a Conta é: quais campos ela tem. Não faz nada, só representa.
 

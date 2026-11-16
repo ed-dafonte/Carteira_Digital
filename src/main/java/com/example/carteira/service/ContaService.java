@@ -14,6 +14,7 @@ public class ContaService {
     @Autowired // em vez de criar o repositório manualmente com "new", o Spring cria e entrega automaticamente uma instância pronta para uso
     private ContaRepository contaRepository;
 
+    //Consulta Saldo
     public Double consultarSaldo(Long id) { // recebe o id da conta que se quer consultar
 
         Conta conta = contaRepository.findById(id) // busca a conta no banco pelo id
@@ -22,8 +23,14 @@ public class ContaService {
         return conta.getSaldo(); // retorna o saldo da conta encontrada
     }
 
-    // método ainda sem implementação — será preenchido no commit GREEN
-    public void depositar(Long id, Double valor) {
+    // Realiza Depósito
+    public void depositar(Long id, Double valor) { // recebe o id da conta e o valor a depositar
 
+        Conta conta = contaRepository.findById(id) // busca a conta no banco pelo id
+                .orElseThrow(() -> new RuntimeException("Conta não encontrada")); // lança erro se a conta não existir
+
+        conta.setSaldo(conta.getSaldo() + valor); // soma o valor depositado ao saldo atual da conta
+
+        contaRepository.save(conta); // salva a conta com o novo saldo no banco
     }
 }

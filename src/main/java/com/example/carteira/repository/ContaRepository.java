@@ -1,7 +1,7 @@
-package com.example.carteira.repository; // define o pacote onde esta interface está localizada
+package com.example.carteira.repository;
 
-import com.example.carteira.model.Conta; // importa a entidade Conta
-import org.springframework.data.jpa.repository.JpaRepository; // importa a interface do Spring que já oferece os métodos de banco prontos
+import com.example.carteira.model.Conta;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
 // É o acesso ao banco. Só sabe buscar, salvar e deletar contas. Não conhece regra de negócio nenhuma.

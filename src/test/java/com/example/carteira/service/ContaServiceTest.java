@@ -1,18 +1,18 @@
-package com.example.carteira.service; // define o pacote onde esta classe de teste está localizada
+package com.example.carteira.service;
 
-import com.example.carteira.model.Conta; // importa a entidade Conta
-import com.example.carteira.repository.ContaRepository; // importa o repositório que será simulado (mock)
-import org.junit.jupiter.api.Test; // importa a anotação que marca um método como teste
-import org.junit.jupiter.api.extension.ExtendWith; // importa a anotação que ativa o Mockito no JUnit 5
-import org.mockito.InjectMocks; // importa a anotação que injeta os mocks na classe testada
-import org.mockito.Mock; // importa a anotação que cria um objeto simulado (mock)
-import org.mockito.junit.jupiter.MockitoExtension; // importa a extensão do Mockito para JUnit 5
+import com.example.carteira.model.Conta;
+import com.example.carteira.repository.ContaRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.Optional;
 
-import java.util.Optional; // importa o Optional, usado pelo findById para indicar que pode ou não existir um valor
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.junit.jupiter.api.Assertions.assertEquals; // importa o método que verifica se dois valores são iguais
-import static org.mockito.Mockito.verify; // importa o método que verifica se algo foi chamado durante o teste
-import static org.mockito.Mockito.when; // importa o método que define o comportamento do mock
 
 @ExtendWith(MockitoExtension.class) // ativa o Mockito para que os @Mock e @InjectMocks funcionem nesta classe
 class ContaServiceTest {
