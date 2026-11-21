@@ -2,6 +2,7 @@ package com.example.carteira.service;
 
 import com.example.carteira.model.Conta;
 import com.example.carteira.repository.ContaRepository;
+import org.junit.jupiter.api.BeforeEach; // importa a anotação que marca o método que roda antes de cada teste
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,12 +25,17 @@ class ContaServiceTest {
     @InjectMocks // cria uma instância do ContaService e injeta o mock do repositório dentro dele
     private ContaService contaService;
 
+    private Conta conta; // declara a conta aqui para ser acessível em todos os testes
+
+    @BeforeEach // este método roda automaticamente antes de cada teste, garantindo um objeto limpo
+    void setUp() {
+        conta = new Conta(1L, "João", 500.0); // recria a conta do zero antes de cada teste — saldo sempre começa em 500
+    }
+
     @Test // marca este método como um caso de teste
     void deveRetornarOSaldoQuandoAContaExiste() {
 
         // --- ARRANGE (preparação) ---
-
-        Conta conta = new Conta(1L, "João", 500.0); // cria uma conta fictícia com id 1, titular João e saldo 500
 
         when(contaRepository.findById(1L)) // define que quando o repositório buscar pelo id 1...
                 .thenReturn(Optional.of(conta)); // ...ele deve retornar a conta dentro de um Optional.
@@ -50,8 +56,6 @@ class ContaServiceTest {
     void deveDepositarValorValidoEAtualizarOSaldo() {
 
         // --- ARRANGE (preparação) ---
-
-        Conta conta = new Conta(1L, "João", 500.0); // cria uma conta fictícia com saldo inicial de 500
 
         when(contaRepository.findById(1L)) // define que quando buscar pelo id 1...
                 .thenReturn(Optional.of(conta)); // ...retorna a conta fictícia
@@ -76,5 +80,13 @@ class ContaServiceTest {
         // o primeiro argumento é a exceção que esperamos
         // o segundo argumento é o código que deve provocar essa exceção
         assertThrows(IllegalArgumentException.class, () -> contaService.depositar(1L, 0.0));
+    }
+
+    @Test // marca este método como um caso de teste
+    void deveLancarExcecaoAoDepositarValorNegativo() {
+
+        // mesmo comportamento do teste anterior — mas agora com valor negativo
+        // a regra é a mesma: qualquer valor <= 0 deve ser rejeitado
+        assertThrows(IllegalArgumentException.class, () -> contaService.depositar(1L, -100.0));
     }
 }

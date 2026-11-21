@@ -14,7 +14,7 @@ public class ContaService {
     @Autowired // em vez de criar o repositório manualmente com "new", o Spring cria e entrega automaticamente uma instância pronta para uso
     private ContaRepository contaRepository;
 
-    //Consulta Saldo
+    // Consulta Saldo
     public Double consultarSaldo(Long id) { // recebe o id da conta que se quer consultar
 
         Conta conta = contaRepository.findById(id) // busca a conta no banco pelo id
@@ -26,7 +26,7 @@ public class ContaService {
     // Realiza Depósito
     public void depositar(Long id, Double valor) { // recebe o id da conta e o valor a depositar
 
-        if (valor <= 0) { // verifica se o valor é zero ou negativo
+        if (valor == 0) { // verifica se o valor é zero ou negativo
             throw new IllegalArgumentException("O valor do depósito deve ser maior que zero"); // lança um erro com mensagem explicando o problema
         }
 
