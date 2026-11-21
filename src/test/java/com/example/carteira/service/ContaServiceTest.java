@@ -89,4 +89,33 @@ class ContaServiceTest {
         // a regra é a mesma: qualquer valor <= 0 deve ser rejeitado
         assertThrows(IllegalArgumentException.class, () -> contaService.depositar(1L, -100.0));
     }
+
+    @Test // marca este método como um caso de teste
+    void deveTransferirValorQuandoSaldoESuficiente() {
+
+        // --- ARRANGE (preparação) ---
+
+        Conta contaOrigem = new Conta(1L, "João", 500.0); // conta que vai enviar o dinheiro, com saldo de 500
+        Conta contaDestino = new Conta(2L, "Maria", 100.0); // conta que vai receber o dinheiro, com saldo de 100
+
+        when(contaRepository.findById(1L)) // quando buscar pelo id 1...
+                .thenReturn(Optional.of(contaOrigem)); // ...retorna a conta de origem
+
+        when(contaRepository.findById(2L)) // quando buscar pelo id 2...
+                .thenReturn(Optional.of(contaDestino)); // ...retorna a conta de destino
+
+        // --- ACT (execução) ---
+
+        contaService.transferir(1L, 2L, 200.0); // transfere 200 da conta de João para a de Maria
+
+        // --- ASSERT (verificação) ---
+
+        assertEquals(300.0, contaOrigem.getSaldo()); // João tinha 500, transferiu 200, deve restar 300
+
+        assertEquals(300.0, contaDestino.getSaldo()); // Maria tinha 100, recebeu 200, deve ter 300
+
+        verify(contaRepository).save(contaOrigem); // verifica se a conta de origem foi salva com o novo saldo
+
+        verify(contaRepository).save(contaDestino); // verifica se a conta de destino foi salva com o novo saldo
+    }
 }

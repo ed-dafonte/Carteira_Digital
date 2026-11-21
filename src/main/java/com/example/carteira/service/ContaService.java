@@ -37,4 +37,9 @@ public class ContaService {
 
         contaRepository.save(conta); // salva a conta com o novo saldo no banco
     }
+
+    // Realiza Transferência — método ainda sem implementação, será preenchido no commit GREEN
+    public void transferir(Long idOrigem, Long idDestino, Double valor) {
+
+    }
 }
