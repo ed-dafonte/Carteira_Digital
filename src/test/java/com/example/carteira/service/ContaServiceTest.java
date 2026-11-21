@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -64,5 +65,16 @@ class ContaServiceTest {
         assertEquals(700.0, conta.getSaldo()); // verifica se o saldo foi atualizado de 500 para 700
 
         verify(contaRepository).save(conta); // verifica se o repositório foi chamado para salvar a conta atualizada
+    }
+
+    @Test // marca este método como um caso de teste
+    void deveLancarExcecaoAoDepositarValorZero() {
+
+        // --- ASSERT + ACT juntos (verificação da exceção) ---
+
+        // assertThrows verifica se o método lança a exceção esperada
+        // o primeiro argumento é a exceção que esperamos
+        // o segundo argumento é o código que deve provocar essa exceção
+        assertThrows(IllegalArgumentException.class, () -> contaService.depositar(1L, 0.0));
     }
 }
