@@ -26,6 +26,10 @@ public class ContaService {
     // Realiza Depósito
     public void depositar(Long id, Double valor) { // recebe o id da conta e o valor a depositar
 
+        if (valor <= 0) { // verifica se o valor é zero ou negativo
+            throw new IllegalArgumentException("O valor do depósito deve ser maior que zero"); // lança um erro com mensagem explicando o problema
+        }
+
         Conta conta = contaRepository.findById(id) // busca a conta no banco pelo id
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada")); // lança erro se a conta não existir
 
