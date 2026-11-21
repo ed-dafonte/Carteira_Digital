@@ -41,5 +41,18 @@ public class ContaService {
     // Realiza Transferência — método ainda sem implementação, será preenchido no commit GREEN
     public void transferir(Long idOrigem, Long idDestino, Double valor) {
 
+        Conta contaOrigem = contaRepository.findById(idOrigem) // busca a conta de origem no banco pelo id
+                .orElseThrow(() -> new RuntimeException("Conta de origem não encontrada")); // lança erro se não existir
+
+        Conta contaDestino = contaRepository.findById(idDestino) // busca a conta de destino no banco pelo id
+                .orElseThrow(() -> new RuntimeException("Conta de destino não encontrada")); // lança erro se não existir
+
+        contaOrigem.setSaldo(contaOrigem.getSaldo() - valor); // subtrai o valor do saldo da conta de origem
+
+        contaDestino.setSaldo(contaDestino.getSaldo() + valor); // adiciona o valor ao saldo da conta de destino
+
+        contaRepository.save(contaOrigem); // salva a conta de origem com o novo saldo
+
+        contaRepository.save(contaDestino); // salva a conta de destino com o novo saldo
     }
 }
