@@ -50,6 +50,14 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Selenium WebDriver — para testes de interface que simulam ações do usuário no navegador -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.31.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

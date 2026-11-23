@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Extrato - Carteira Digital</title>
+</head>
+<body>
+
+    <h1>Consultar Extrato</h1>
+
+    <!-- formulário onde o usuário digita o id da conta e clica em consultar -->
+    <form id="formExtrato">
+
+        <label for="idConta">Número da Conta:</label>
+        <!-- campo onde o usuário digita o id da conta -->
+        <input type="text" id="idConta" name="idConta" placeholder="Digite o número da conta">
+
+        <!-- botão que o usuário clica para consultar -->
+        <button type="button" id="btnConsultar" onclick="consultar()">Consultar</button>
+
+    </form>
+
+    <!-- área onde o resultado da consulta será exibido -->
+    <p id="resultado"></p>
+
+    <script>
+        // função chamada quando o usuário clica no botão Consultar
+        function consultar() {
+            var id = document.getElementById("idConta").value; // lê o valor digitado no campo
+            if (id) { // verifica se o campo não está vazio
+                document.getElementById("resultado").innerText = "Consultando conta: " + id; // exibe o resultado na tela
+            } else {
+                document.getElementById("resultado").innerText = "Por favor, informe o número da conta."; // exibe mensagem de erro
+            }
+        }
+    </script>
+
+</body>
+</html>
