@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows; // importa o método que verifica se uma exceção foi lançada
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -117,5 +117,21 @@ class ContaServiceTest {
         verify(contaRepository).save(contaOrigem); // verifica se a conta de origem foi salva com o novo saldo
 
         verify(contaRepository).save(contaDestino); // verifica se a conta de destino foi salva com o novo saldo
+    }
+
+    @Test // marca este método como um caso de teste
+    void deveLancarExcecaoQuandoSaldoInsuficienteNaTransferencia() {
+
+        // --- ARRANGE (preparação) ---
+
+        Conta contaOrigem = new Conta(1L, "João", 100.0); // conta de origem com saldo de apenas 100
+
+        when(contaRepository.findById(1L)) // quando buscar pelo id 1...
+                .thenReturn(Optional.of(contaOrigem)); // ...retorna a conta de origem
+
+        // --- ASSERT + ACT (verificação da exceção) ---
+
+        // tenta transferir 300, mas João só tem 100 — deve lançar SaldoInsuficienteException
+        assertThrows(SaldoInsuficienteException.class, () -> contaService.transferir(1L, 2L, 300.0));
     }
 }
