@@ -38,11 +38,15 @@ public class ContaService {
         contaRepository.save(conta); // salva a conta com o novo saldo no banco
     }
 
-    // Realiza Transferência — método ainda sem implementação, será preenchido no commit GREEN
+    // Realiza Transferência
     public void transferir(Long idOrigem, Long idDestino, Double valor) {
 
         Conta contaOrigem = contaRepository.findById(idOrigem) // busca a conta de origem no banco pelo id
                 .orElseThrow(() -> new RuntimeException("Conta de origem não encontrada")); // lança erro se não existir
+
+        if (contaOrigem.getSaldo() < valor) { // verifica se o saldo da conta de origem é menor que o valor a transferir
+            throw new SaldoInsuficienteException("Saldo insuficiente para realizar a transferência"); // lança a exceção personalizada
+        }
 
         Conta contaDestino = contaRepository.findById(idDestino) // busca a conta de destino no banco pelo id
                 .orElseThrow(() -> new RuntimeException("Conta de destino não encontrada")); // lança erro se não existir
